@@ -1,5 +1,4 @@
 #include "Modes.h" // Inclure le fichier d'en-tête
-#include "ChainableLED.h" // Assurez-vous d'inclure les bibliothèques nécessaires
 #include "./LED/LED_control.h"
 
 
