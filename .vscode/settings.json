@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "chainableled.h": "c",
+        "asyncdelay.h": "c"
+    }
+}
