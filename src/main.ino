@@ -8,6 +8,9 @@
 #include "AsyncDelay.h"
 #include "ChainableLED.h"
 #include "./Sensors/Light/LightSensor.h"
+#include "Sensors/THPA/BME280Sensor.h"
+
+BME280Sensor bmeSensor;
 
 
 #define LIGHT_SENSOR_PIN A0
@@ -20,11 +23,19 @@ void setup() {
     initLEDs();  // Initialiser les LEDs et les boutons
     initModes(); // Initialiser les modes
     lightSensor.setup();
+    Serial.println(F("Initialisation du capteur BME280..."));
+
+    if (!bmeSensor.begin()) {  // Initialiser le capteur
+        Serial.println("Erreur de communication avec le capteur BME280.");
+        while (1);
+    }
 }
 
 void loop() {
     updateModes(); // Mettre à jour le mode en fonction des entrées utilisateur
     lightSensor.loop();
+    bmeSensor.readSensor();  // Lire les valeurs du capteur
+    delay(2000);
 
     switch (currentMode) {
         case MODE_STANDARD:
