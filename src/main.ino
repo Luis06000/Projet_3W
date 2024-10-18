@@ -9,7 +9,9 @@
 #include "ChainableLED.h"
 #include "./Sensors/Light/LightSensor.h"
 #include "Sensors/THPA/BME280Sensor.h"
+#include "./RTC/RTC.h"
 
+RTC rtcSensor;
 BME280Sensor bmeSensor;
 
 
