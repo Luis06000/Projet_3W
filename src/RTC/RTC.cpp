@@ -19,7 +19,6 @@ void RTC::adjustTime() {
 void RTC::printCurrentTime() {
     DateTime now = rtc.now();
 
-    // Afficher la date et l'heure dans le Moniteur Série
     Serial.print("Date: ");
     Serial.print(now.day(), DEC);
     Serial.print('/');

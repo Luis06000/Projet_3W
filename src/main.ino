@@ -10,6 +10,7 @@
 #include "./Sensors/Light/LightSensor.h"
 #include "Sensors/THPA/BME280Sensor.h"
 #include "./RTC/RTC.h"
+#include "./Buttons/Button_control.h"
 
 RTC rtcSensor;
 BME280Sensor bmeSensor;
@@ -23,6 +24,7 @@ LightSensor lightSensor(LIGHT_SENSOR_PIN, LIGHT_THRESHOLD);
 void setup() {
     Serial.begin(9600);  // Initialiser la communication série
     initLEDs();  // Initialiser les LEDs et les boutons
+    initButtons();
     initModes(); // Initialiser les modes
     lightSensor.setup();
     Serial.println(F("Initialisation du capteur BME280..."));
@@ -44,7 +46,7 @@ void loop() {
             modeStandard();
             break;
         case MODE_ECONOMY:
-            modeEconomy();
+            modeEconomique();
             break;
         case MODE_MAINTENANCE:
             modeMaintenance();
