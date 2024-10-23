@@ -31,4 +31,6 @@ void RTC::printCurrentTime() {
     Serial.print(now.minute(), DEC);
     Serial.print(':');
     Serial.println(now.second(), DEC);
+
+    Serial.println();
 }

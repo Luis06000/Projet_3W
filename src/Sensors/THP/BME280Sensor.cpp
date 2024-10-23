@@ -2,7 +2,6 @@
 #include <Wire.h>
 #include <SPI.h>
 
-#define SEALEVELPRESSURE_HPA (1013.25)  // Pression au niveau de la mer
 
 BME280Sensor::BME280Sensor() {}
 
@@ -14,7 +13,6 @@ void BME280Sensor::readSensor() {
     temperature = bme.readTemperature();
     humidity = bme.readHumidity();
     pressure = bme.readPressure() / 100.0F;  // Convertir en hPa
-    altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
 
     // Afficher les valeurs dans le Moniteur Série
     Serial.print("Température : ");
@@ -28,10 +26,4 @@ void BME280Sensor::readSensor() {
     Serial.print("Pression : ");
     Serial.print(pressure);
     Serial.println(" hPa");
-
-    Serial.print("Altitude approximative : ");
-    Serial.print(altitude);
-    Serial.println(" m");
-
-    Serial.println();
 }

@@ -1,5 +1,5 @@
-#ifndef THPA
-#define THPA
+#ifndef THP
+#define THP
 
 #include <Adafruit_BME280.h>
 
@@ -14,7 +14,6 @@ private:
     float temperature;
     float humidity;
     float pressure;
-    float altitude;
 };
 
 #endif

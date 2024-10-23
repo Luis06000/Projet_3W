@@ -53,6 +53,4 @@ void LightSensor::loop() {
 
     Serial.print("Valeur du capteur de lumière: ");
     Serial.println(lightValue);
-
-    delay(500);
 }

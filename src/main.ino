@@ -1,14 +1,13 @@
 #include "./LED/LED_control.h"
 #include <Adafruit_I2CDevice.h>
 #include <SPI.h>
-#include "./LED/LED_control.h" // Inclure le fichier d'en-tête approprié
 #include "./Modes/Modes.h" // Inclure le fichier d'en-tête des modes
 #include "Wire.h"
 #include <SPI.h>
 #include "AsyncDelay.h"
 #include "ChainableLED.h"
 #include "./Sensors/Light/LightSensor.h"
-#include "Sensors/THPA/BME280Sensor.h"
+#include "Sensors/THP/BME280Sensor.h"
 #include "./RTC/RTC.h"
 #include "./Buttons/Button_control.h"
 
@@ -27,18 +26,28 @@ void setup() {
     initButtons();
     initModes(); // Initialiser les modes
     lightSensor.setup();
-    Serial.println(F("Initialisation du capteur BME280..."));
+    bmeSensor.begin();
+    if (!rtcSensor.begin()) {
+        while (!rtcSensor.isRunning())
+        {
+          setLEDColor(255, 0, 0);
+          delay(1000);
+          setLEDColor(255, 255, 0);
+          delay(1000);
+        }
+    };
+    rtcSensor.adjustTime();
 
-    if (!bmeSensor.begin()) {  // Initialiser le capteur
-        Serial.println("Erreur de communication avec le capteur BME280.");
-        while (1);
-    }
 }
 
 void loop() {
-    updateModes(); // Mettre à jour le mode en fonction des entrées utilisateur
+    updateModes();
+    if (currentMode == MODE_CONFIGURATION) {
+        return ; // Ne pas changer de mode
+    }
     lightSensor.loop();
-    bmeSensor.readSensor();  // Lire les valeurs du capteur
+    bmeSensor.readSensor();
+    rtcSensor.printCurrentTime();
     delay(2000);
 
     switch (currentMode) {
