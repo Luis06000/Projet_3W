@@ -12,8 +12,20 @@ bool RTC::isRunning() {
     return rtc.isrunning();
 }
 
-void RTC::adjustTime() {
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+void RTC::adjustTimeFromSerial() {
+    Serial.println("\n Entrez l'heure (HH) et les minutes (MM) au format: HH MM");
+    // Attendre la saisie de l'heure et des minutes
+    while (Serial.available() < 5) {
+        delay(10);
+    }
+
+    int hour = Serial.parseInt();
+    int minute = Serial.parseInt();
+
+    // Obtenir la date actuelle depuis l'horloge RTC
+    DateTime now = rtc.now();
+
+    rtc.adjust(DateTime(now.year(), now.month(), now.day(), hour, minute, 0));
 }
 
 void RTC::printCurrentTime() {

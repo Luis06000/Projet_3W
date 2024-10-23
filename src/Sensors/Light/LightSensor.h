@@ -1,15 +1,18 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+#include <Arduino.h>
+
 // Définition de la classe LightSensor
 class LightSensor {
 public:
-    LightSensor(int lightPin, int threshold);  // Supprimer le paramètre led
-    void setup();
-    void loop();
+    LightSensor();  // Constructeur
+    bool begin();   // Initialiser le capteur de lumière
+    bool isRunning();  // Vérifier si le capteur est en marche
+    void printLightValue();  // Afficher la valeur du capteur de lumière
+
 private:
-    int lightSensorPin;
-    int lightThreshold;
+    int lightSensorPin = A0;
 };
 
 #endif // LIGHT_H

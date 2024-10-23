@@ -11,43 +11,50 @@
 #include "./RTC/RTC.h"
 #include "./Buttons/Button_control.h"
 
-RTC rtcSensor;
-BME280Sensor bmeSensor;
 
-
-#define LIGHT_SENSOR_PIN A0
 #define LIGHT_THRESHOLD 300
 
-LightSensor lightSensor(LIGHT_SENSOR_PIN, LIGHT_THRESHOLD);
+RTC rtcSensor;
+BME280Sensor bmeSensor;
+LightSensor lightSensor;
+
+
 
 void setup() {
-    Serial.begin(9600);  // Initialiser la communication série
-    initLEDs();  // Initialiser les LEDs et les boutons
+    Serial.begin(9600);
+    initLEDs();
     initButtons();
-    initModes(); // Initialiser les modes
-    lightSensor.setup();
-    bmeSensor.begin();
+    initModes();
     if (!rtcSensor.begin()) {
-        while (!rtcSensor.isRunning())
+        while (1)
         {
           setLEDColor(255, 0, 0);
-          delay(1000);
+          delay(500);
           setLEDColor(255, 255, 0);
-          delay(1000);
+          delay(500);
         }
     };
-    rtcSensor.adjustTime();
-
+    rtcSensor.adjustTimeFromSerial();
+    if (!lightSensor.begin() || !bmeSensor.begin()) {
+        while (1)
+        {
+          setLEDColor(255, 0, 0);
+          delay(500);
+          setLEDColor(0, 255, 0);
+          delay(500);
+        }
+    };
 }
 
 void loop() {
     updateModes();
     if (currentMode == MODE_CONFIGURATION) {
-        return ; // Ne pas changer de mode
+        return ;
     }
-    lightSensor.loop();
+    lightSensor.printLightValue();
     bmeSensor.readSensor();
     rtcSensor.printCurrentTime();
+    // delay(600000);
     delay(2000);
 
     switch (currentMode) {
