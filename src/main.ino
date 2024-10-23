@@ -1,18 +1,16 @@
 #include "./LED/LED_control.h"
-#include <Adafruit_I2CDevice.h>
-#include <SPI.h>
-#include "./Modes/Modes.h" // Inclure le fichier d'en-tête des modes
-#include "Wire.h"
-#include <SPI.h>
-#include "AsyncDelay.h"
-#include "ChainableLED.h"
+#include "./Modes/Modes.h"
 #include "./Sensors/Light/LightSensor.h"
 #include "Sensors/THP/BME280Sensor.h"
 #include "./RTC/RTC.h"
 #include "./Buttons/Button_control.h"
+#include <Adafruit_I2CDevice.h>
+#include <SPI.h>
+#include "Wire.h"
+#include <SPI.h>
+#include "AsyncDelay.h"
+#include "ChainableLED.h"
 
-
-#define LIGHT_THRESHOLD 300
 
 RTC rtcSensor;
 BME280Sensor bmeSensor;
@@ -22,9 +20,6 @@ LightSensor lightSensor;
 
 void setup() {
     Serial.begin(9600);
-    initLEDs();
-    initButtons();
-    initModes();
     if (!rtcSensor.begin()) {
         while (1)
         {
@@ -44,6 +39,9 @@ void setup() {
           delay(500);
         }
     };
+    initLEDs();
+    initButtons();
+    initModes();
 }
 
 void loop() {

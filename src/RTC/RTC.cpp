@@ -13,19 +13,19 @@ bool RTC::isRunning() {
 }
 
 void RTC::adjustTimeFromSerial() {
-    Serial.println("\n Entrez l'heure (HH) et les minutes (MM) au format: HH MM");
+    Serial.println("\n Entrez le jour (JJ), le mois (MM), l'année (AAAA), l'heure (HH) et les minutes (MM) au format: JJ MM AAAA HH MM");
     // Attendre la saisie de l'heure et des minutes
-    while (Serial.available() < 5) {
+    while (Serial.available() < 16) {
         delay(10);
     }
 
+    int day = Serial.parseInt();
+    int month = Serial.parseInt();
+    int year = Serial.parseInt();
     int hour = Serial.parseInt();
     int minute = Serial.parseInt();
 
-    // Obtenir la date actuelle depuis l'horloge RTC
-    DateTime now = rtc.now();
-
-    rtc.adjust(DateTime(now.year(), now.month(), now.day(), hour, minute, 0));
+    rtc.adjust(DateTime(year, month, day, hour, minute, 0));
 }
 
 void RTC::printCurrentTime() {
