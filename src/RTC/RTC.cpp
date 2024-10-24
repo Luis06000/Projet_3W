@@ -1,12 +1,12 @@
 #include "RTC.h"
 #include <Wire.h>
 #include <SPI.h>
+#include "Config.h"
 
 RTC::RTC() {}
 
 // Variable pour suivre le temps écoulé
 unsigned long lastPrintTime = 0;
-const unsigned long printInterval = 60000; // Intervalle de 60 secondes
 
 bool RTC::begin() {
     return rtc.begin();
@@ -32,8 +32,8 @@ void RTC::adjustTimeFromSerial() {
 }
 
 void RTC::printCurrentTime() {
-    // Vérifier si 60 secondes se sont écoulées depuis le dernier affichage
-    if (millis() - lastPrintTime >= printInterval) {
+    // Vérifier si le délai s'est écoulé depuis le dernier affichage
+    if (millis() - lastPrintTime >= LOG_INTERVAL) {
         // Met à jour le temps du dernier affichage
         lastPrintTime = millis();
 
