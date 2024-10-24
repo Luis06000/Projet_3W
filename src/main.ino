@@ -17,7 +17,9 @@ BME280Sensor bmeSensor;
 LightSensor lightSensor;
 
 
-unsigned long LOG_INTERVAL = 60000;  // Intervalle par défaut de 60 secondes
+unsigned long LOG_INTERVALL = 1;
+unsigned long LOG_INTERVAL = LOG_INTERVALL * 60000;
+
 
 void setup() {
     Serial.begin(9600);

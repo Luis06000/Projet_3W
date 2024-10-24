@@ -18,7 +18,6 @@ bool RTC::isRunning() {
 
 void RTC::adjustTimeFromSerial() {
     Serial.println("\nEntrez le jour (JJ), le mois (MM), l'année (AA), l'heure (HH) et les minutes (MM) au format: JJ MM AA HH MM");
-    // Attendre la saisie de l'heure et des minutes
     while (Serial.available() < 14) {
     }
 

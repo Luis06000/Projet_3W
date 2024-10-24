@@ -19,6 +19,12 @@ const unsigned long inactivityDuration = 1800000; // 30 minutes d'inactivité
 // Variables pour empêcher la LED de clignoter
 bool modeChanged = false; // Empêche de changer de mode plusieurs fois tant que le bouton est maintenu
 
+
+void mode_configuration() {
+    Serial.println("Configuration des paramètres...");
+}
+
+
 // Fonction d'initialisation des modes
 void initModes() {
     pinMode(BUTTON_1_PIN, INPUT_PULLUP);
@@ -29,6 +35,7 @@ void initModes() {
         currentMode = MODE_CONFIGURATION; // Passer en mode Configuration si le bouton rouge est appuyé au démarrage
         setLEDColor(255, 255, 0); // LED jaune
         lastActivityTime = millis(); // Démarre le compteur d'inactivité
+        mode_configuration();
         return;
     } else {
         currentMode = MODE_STANDARD; // Passer en mode Standard si le bouton rouge n'est pas pressé
@@ -36,11 +43,23 @@ void initModes() {
     }
 }
 
+
 // Fonction de mise à jour des modes en fonction des boutons
 void updateModes() {
     // Lire l'état actuel des boutons
     bool button1State = digitalRead(BUTTON_1_PIN);
     bool button2State = digitalRead(BUTTON_2_PIN);
+
+    // Gestion du mode Configuration et de l'inactivité
+    if (currentMode == MODE_CONFIGURATION) {
+        // Si aucune activité pendant 30 minutes, passer en mode Standard
+        if (millis() - lastActivityTime >= inactivityDuration) {
+            currentMode = MODE_STANDARD;
+            setLEDColor(0, 255, 0); // LED verte
+            return;
+        }
+        return;
+    }
 
     // Gestion du bouton 1 (pour entrer en mode Économie après 5 secondes)
     if (button1State == LOW && lastButton1State == HIGH) {
