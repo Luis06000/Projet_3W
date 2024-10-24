@@ -39,9 +39,9 @@ void setup() {
           delay(500);
         }
     };
-    initLEDs();
     initButtons();
     initModes();
+    initLEDs();
 }
 
 void loop() {
@@ -52,18 +52,5 @@ void loop() {
     lightSensor.printLightValue();
     bmeSensor.readSensor();
     rtcSensor.printCurrentTime();
-    // delay(600000);
-    delay(2000);
 
-    switch (currentMode) {
-        case MODE_STANDARD:
-            modeStandard();
-            break;
-        case MODE_ECONOMY:
-            modeEconomique();
-            break;
-        case MODE_MAINTENANCE:
-            modeMaintenance();
-            break;
-    }
 }
