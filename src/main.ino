@@ -11,6 +11,8 @@
 #include "AsyncDelay.h"
 #include "ChainableLED.h"
 #include "Config.h"
+#include "./SDCard/SDCard.h"
+#include "./GPS/GPS.h"
 
 
 RTC rtcSensor;
@@ -20,37 +22,50 @@ LightSensor lightSensor;
 
 void setup() {
     Serial.begin(9600);
-    if (!rtcSensor.begin()) {
-        while (1)
-        {
-          setLEDColor(255, 0, 0);
-          delay(500);
-          setLEDColor(0, 0, 255);
-          delay(500);
-        }
-    };
-    if (!lightSensor.begin() || !bmeSensor.begin()) {
-        while (1)
-        {
-          setLEDColor(255, 0, 0);
-          delay(500);
-          setLEDColor(0, 255, 0);
-          delay(500);
-        }
-    };
-    initButtons();
-    initModes();
-    initLEDs();
-    loadConfigFromEEPROM();
+    // if (!rtcSensor.begin()) {
+    //     while (1)
+    //     {
+    //       setLEDColor(255, 0, 0);
+    //       delay(500);
+    //       setLEDColor(0, 0, 255);
+    //       delay(500);
+    //     }
+    // };
+    // if (!lightSensor.begin() || !bmeSensor.begin()) {
+    //     while (1)
+    //     {
+    //       setLEDColor(255, 0, 0);
+    //       delay(500);
+    //       setLEDColor(0, 255, 0);
+    //       delay(500);
+    //     }
+    // };
+    // initButtons();
+    // initModes();
+    // initLEDs();
+    // loadConfigFromEEPROM();
+    // setupSDCard();
+    setupGPS();
 }
 
 void loop() {
-    updateModes();
-    if (currentMode == MODE_CONFIGURATION) {
-        return ;
-    }
-    lightSensor.printLightValue();
-    bmeSensor.readSensor();
-    rtcSensor.printCurrentTime();
-
+    // if (isSDCardFull) {
+    //     while (1)
+    //     {
+    //       setLEDColor(255, 0, 0);
+    //       delay(500);
+    //       setLEDColor(255, 255, 255);
+    //       delay(500);
+    //     }
+    // }
+    // updateModes();
+    // if (currentMode == MODE_CONFIGURATION) {
+    //     return ;
+    // }
+    // lightSensor.printLightValue();
+    // bmeSensor.readSensor();
+    // rtcSensor.printCurrentTime();
+    // logData();
+    readGPSData();
+    delay(10000);
 }
