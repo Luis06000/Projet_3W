@@ -30,7 +30,7 @@ void LightSensor::printLightValue() {
         int lightValue = analogRead(lightSensorPin);
 
         // Afficher la valeur du capteur de lumière
-        Serial.print("Valeur du capteur de lumière: ");
+        Serial.print("\nValeur du capteur de lumière: ");
         Serial.println(lightValue);
     }
 }

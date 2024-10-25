@@ -10,15 +10,12 @@
 #include <SPI.h>
 #include "AsyncDelay.h"
 #include "ChainableLED.h"
+#include "Config.h"
 
 
 RTC rtcSensor;
 BME280Sensor bmeSensor;
 LightSensor lightSensor;
-
-
-unsigned long LOG_INTERVALL = 1;
-unsigned long LOG_INTERVAL = LOG_INTERVALL * 60000;
 
 
 void setup() {
@@ -28,11 +25,10 @@ void setup() {
         {
           setLEDColor(255, 0, 0);
           delay(500);
-          setLEDColor(255, 255, 0);
+          setLEDColor(0, 0, 255);
           delay(500);
         }
     };
-    rtcSensor.adjustTimeFromSerial();
     if (!lightSensor.begin() || !bmeSensor.begin()) {
         while (1)
         {
@@ -45,6 +41,7 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
+    loadConfigFromEEPROM();
 }
 
 void loop() {

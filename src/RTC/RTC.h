@@ -8,7 +8,6 @@ public:
     RTC();  // Constructeur
     bool begin();  // Initialiser le module RTC
     bool isRunning();  // Vérifier si l'horloge est en marche
-    void adjustTimeFromSerial();  // Ajuster l'heure si nécessaire
     void printCurrentTime();  // Afficher l'heure actuelle
 
 private:

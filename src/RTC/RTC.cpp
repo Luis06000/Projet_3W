@@ -16,20 +16,6 @@ bool RTC::isRunning() {
     return rtc.isrunning();
 }
 
-void RTC::adjustTimeFromSerial() {
-    Serial.println("\nEntrez le jour (JJ), le mois (MM), l'année (AA), l'heure (HH) et les minutes (MM) au format: JJ MM AA HH MM");
-    while (Serial.available() < 14) {
-    }
-
-    int day = Serial.parseInt();
-    int month = Serial.parseInt();
-    int year = Serial.parseInt();
-    int hour = Serial.parseInt();
-    int minute = Serial.parseInt();
-
-    rtc.adjust(DateTime(year, month, day, hour, minute, 0));
-}
-
 void RTC::printCurrentTime() {
     // Vérifier si le délai s'est écoulé depuis le dernier affichage
     if (millis() - lastPrintTime >= LOG_INTERVAL) {
