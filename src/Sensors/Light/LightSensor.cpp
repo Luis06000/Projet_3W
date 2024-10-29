@@ -6,7 +6,7 @@
 LightSensor::LightSensor() {}
 
 // Variable pour suivre le temps écoulé
-unsigned long lastLightPrintTime = 0;
+// unsigned long lastLightPrintTime = 0;
 
 // Initialiser le capteur de lumière
 bool LightSensor::begin() {
@@ -22,9 +22,9 @@ bool LightSensor::isRunning() {
 // Afficher la valeur actuelle du capteur de lumière
 void LightSensor::printLightValue() {
     // Vérifier si le délai s'est écoulé depuis la dernière mesure
-    if (millis() - lastLightPrintTime >= LOG_INTERVAL) {
+    // if (millis() - lastLightPrintTime >= LOG_INTERVAL) {
         // Met à jour le temps du dernier affichage
-        lastLightPrintTime = millis();
+        // lastLightPrintTime = millis();
 
         // Lire la valeur du capteur
         int lightValue = analogRead(lightSensorPin);
@@ -32,5 +32,5 @@ void LightSensor::printLightValue() {
         // Afficher la valeur du capteur de lumière
         Serial.print("\nValeur du capteur de lumière: ");
         Serial.println(lightValue);
-    }
+    // }
 }

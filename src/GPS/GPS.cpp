@@ -1,13 +1,11 @@
 #include "GPS.h"
 
 // Initialisation des variables globales
-SoftwareSerial gpsSerial(3, 4); // RX = D3, TX = D4
+SoftwareSerial gpsSerial(3, 4);
 TinyGPSPlus gps;
 
 void setupGPS() {
-    Serial.begin(9600);     // Pour afficher les résultats sur le moniteur série
     gpsSerial.begin(9600);  // Initialiser le port série logiciel pour le GPS
-    Serial.println("Lecture des données GPS...");
 }
 
 void displayInfo() {
