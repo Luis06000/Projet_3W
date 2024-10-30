@@ -63,15 +63,12 @@ void loop() {
     //     }
     // }
     updateModes();
-    // if (currentMode == MODE_CONFIGURATION) {
-    //     return ;
-    // }
     if (millis() - lastPrintTime >= LOG_INTERVAL) {
         lastPrintTime = millis();
         // lightSensor.printLightValue();
         bmeSensor.readSensor();
         rtcSensor.printCurrentTime();
         // logData();
-        // readGPSData();
+        readGPSData();
     }
 }
