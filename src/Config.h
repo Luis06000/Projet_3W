@@ -44,9 +44,6 @@
 
 
 
-
-
-
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -61,6 +58,7 @@ extern unsigned long FILE_MAX_SIZE;
 void loadConfigFromEEPROM();  // Charge les valeurs depuis l'EEPROM
 void saveConfigToEEPROM(const String &paramName); // Sauvegarde une variable spécifique dans l'EEPROM
 void updateConfigParameter(const String &paramName, unsigned long paramValue); // Met à jour une variable et la sauvegarde dans l'EEPROM
+void resetConfig(); // Réinitialise les paramètres par défaut
+void displayVersion(); // Affiche la version du programme
 
 #endif
-

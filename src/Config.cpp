@@ -51,6 +51,77 @@
 
 
 
+// #include <EEPROM.h>
+// #include <SoftwareSerial.h>
+// #include "Config.h"
+
+// // Définir les adresses de chaque variable dans l'EEPROM
+// #define ADDR_LOG_INTERVALL 0
+// #define ADDR_LOG_INTERVAL sizeof(unsigned long)
+// #define ADDR_FILE_MAX_SIZE (2 * sizeof(unsigned long))
+
+// // Valeurs par défaut
+// unsigned long LOG_INTERVALL = 1;
+// unsigned long LOG_INTERVAL = LOG_INTERVALL * 60000;
+// unsigned long FILE_MAX_SIZE = 4096;
+
+// // Fonction pour lire les valeurs depuis l'EEPROM au démarrage
+// void loadConfigFromEEPROM() {
+//     EEPROM.get(ADDR_LOG_INTERVALL, LOG_INTERVALL);
+//     EEPROM.get(ADDR_LOG_INTERVAL, LOG_INTERVAL);
+//     EEPROM.get(ADDR_FILE_MAX_SIZE, FILE_MAX_SIZE);
+// }
+
+// // Fonction pour sauvegarder une variable dans l'EEPROM
+// void saveConfigToEEPROM(const String &paramName) {
+//     if (paramName == "LOG_INTERVALL") {
+//         EEPROM.put(ADDR_LOG_INTERVALL, LOG_INTERVALL);
+//         LOG_INTERVAL = LOG_INTERVALL * 60000;
+//         EEPROM.put(ADDR_LOG_INTERVAL, LOG_INTERVAL);
+//     } else if (paramName == "FILE_MAX_SIZE") {
+//         EEPROM.put(ADDR_FILE_MAX_SIZE, FILE_MAX_SIZE);
+//     }
+// }
+
+// // Fonction pour mettre à jour un paramètre et sauvegarder dans l'EEPROM
+// void updateConfigParameter(const String &paramName, unsigned long paramValue) {
+//     if (paramName == "LOG_INTERVALL") {
+//         LOG_INTERVALL = paramValue;
+//         saveConfigToEEPROM(paramName);
+//     } else if (paramName == "FILE_MAX_SIZE") {
+//         FILE_MAX_SIZE = paramValue;
+//         saveConfigToEEPROM(paramName);
+//     } else {
+//         Serial.println("Paramètre inconnu.");
+//     }
+// }
+
+// // Fonction pour remettre les paramètres initiaux
+// void resetConfig() {
+//     LOG_INTERVALL = 1;
+//     LOG_INTERVAL = LOG_INTERVALL * 60000;
+//     FILE_MAX_SIZE = 4096;
+    
+//     saveConfigToEEPROM("LOG_INTERVALL");
+//     saveConfigToEEPROM("FILE_MAX_SIZE");
+
+//     Serial.println(F("Configuration réinitialisée aux valeurs par défaut."));
+// }
+
+// // Fonction pour afficher la version du programme et le numéro de lot
+// void printVersion() {
+//     Serial.print(F("Version du programme: "));
+//     Serial.println(PROGRAM_VERSION);
+//     Serial.print(F("Numéro de lot: "));
+//     Serial.println(BATCH_NUMBER);
+// }
+
+
+
+
+
+
+
 #include <EEPROM.h>
 #include "Config.h"
 
@@ -63,6 +134,10 @@
 unsigned long LOG_INTERVALL = 1;
 unsigned long LOG_INTERVAL = LOG_INTERVALL * 60000;
 unsigned long FILE_MAX_SIZE = 4096;
+
+// Version du programme
+const String PROGRAM_VERSION = "1.0.0";
+const String BATCH_NUMBER = "BATCH1234"; // Numéro de lot pour le suivi
 
 // Fonction pour lire les valeurs depuis l'EEPROM au démarrage
 void loadConfigFromEEPROM() {
@@ -102,3 +177,23 @@ void updateConfigParameter(const String &paramName, unsigned long paramValue) {
     }
 }
 
+// Fonction pour réinitialiser les paramètres par défaut
+void resetConfig() {
+    LOG_INTERVALL = 1;
+    LOG_INTERVAL = LOG_INTERVALL * 60000;
+    FILE_MAX_SIZE = 4096;
+    
+    // Sauvegarder les valeurs par défaut dans l'EEPROM
+    saveConfigToEEPROM("LOG_INTERVALL");
+    saveConfigToEEPROM("FILE_MAX_SIZE");
+
+    Serial.println(F("Configuration réinitialisée aux valeurs par défaut."));
+}
+
+// Fonction pour afficher la version du programme
+void displayVersion() {
+    Serial.print(F("Version du programme : "));
+    Serial.println(PROGRAM_VERSION);
+    Serial.print(F("Numéro de lot : "));
+    Serial.println(BATCH_NUMBER);
+}
