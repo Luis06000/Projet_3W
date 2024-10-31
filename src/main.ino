@@ -65,10 +65,10 @@ void loop() {
     updateModes();
     if (millis() - lastPrintTime >= LOG_INTERVAL) {
         lastPrintTime = millis();
-        // lightSensor.printLightValue();
+        // rtcSensor.printCurrentTime();
+        lightSensor.printLightValue();
         bmeSensor.readSensor();
-        rtcSensor.printCurrentTime();
         // logData();
-        readGPSData();
+        // readGPSData();
     }
 }

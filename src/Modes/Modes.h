@@ -31,9 +31,6 @@
 #include "./LED/LED_control.h"
 #include <Arduino.h>
 
-extern unsigned long lastActivityTime;
-const unsigned long INACTIVITY_TIMEOUT = 120000;
-
 enum Mode { MODE_STANDARD, MODE_ECONOMY, MODE_MAINTENANCE, MODE_CONFIGURATION };
 extern Mode currentMode;
 
