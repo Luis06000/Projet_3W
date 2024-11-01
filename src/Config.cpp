@@ -15,10 +15,13 @@
 #define ADDR_HYGR_MAX (12 * sizeof(unsigned long)) // Adresse pour HYGR_MAX
 #define ADDR_PRESSURE_MIN (13 * sizeof(unsigned long)) // Adresse pour PRESSURE_MIN
 #define ADDR_PRESSURE_MAX (14 * sizeof(unsigned long)) // Adresse pour PRESSURE_MAX
+#define ADDR_TIMEOUT (15 * sizeof(unsigned long)) // Adresse pour TIMEOUT
+
 
 // Initialisation des paramètres avec des valeurs par défaut
 unsigned long LOG_INTERVAL = 1;
-unsigned long FILE_MAX_SIZE = 4096;
+unsigned long FILE_MAX_SIZE = 2048;
+unsigned long TIMEOUT = 30;
 bool LUMIN = 1; // Valeur par défaut : capteur activé
 bool TEMP_AIR = 1; // Valeur par défaut : acquisition de la température activée
 bool HYGR = 1; // Valeur par défaut : acquisition de l'humidité activée
@@ -40,8 +43,8 @@ const String BATCH_NUMBER = "BATCH 1"; // Numéro de lot pour le suivi
 
 // Fonction pour lire les valeurs depuis l'EEPROM au démarrage
 void loadConfigFromEEPROM() {
-    EEPROM.get(ADDR_LOG_INTERVAL, LOG_INTERVAL);
-    EEPROM.get(ADDR_FILE_MAX_SIZE, FILE_MAX_SIZE);
+    EEPROM.get(ADDR_LOG_INTERVAL, LOG_INTERVAL); // Chargement de LOG_INTERVAL
+    EEPROM.get(ADDR_FILE_MAX_SIZE, FILE_MAX_SIZE); // Chargement de FILE_MAX_SIZE
     EEPROM.get(ADDR_LUMIN, LUMIN); // Chargement de LUMIN
     EEPROM.get(ADDR_TEMP_AIR, TEMP_AIR); // Chargement de TEMP_AIR
     EEPROM.get(ADDR_HYGR, HYGR); // Chargement de HYGR
@@ -54,6 +57,7 @@ void loadConfigFromEEPROM() {
     EEPROM.get(ADDR_HYGR_MAX, HYGR_MAX); // Chargement de HYGR_MAX
     EEPROM.get(ADDR_PRESSURE_MIN, PRESSURE_MIN); // Chargement de PRESSURE_MIN
     EEPROM.get(ADDR_PRESSURE_MAX, PRESSURE_MAX); // Chargement de PRESSURE_MAX
+    EEPROM.get(ADDR_TIMEOUT, TIMEOUT); // Chargement de TIMEOUT
 }
 
 // Fonction pour sauvegarder une variable dans l'EEPROM
@@ -86,6 +90,8 @@ void saveConfigToEEPROM(const String &paramName) {
         EEPROM.put(ADDR_PRESSURE_MIN, PRESSURE_MIN); // Sauvegarder PRESSURE_MIN
     } else if (paramName == "PRESSURE_MAX") {
         EEPROM.put(ADDR_PRESSURE_MAX, PRESSURE_MAX); // Sauvegarder PRESSURE_MAX
+    } else if (paramName == "TIMEOUT") {
+        EEPROM.put(ADDR_TIMEOUT, TIMEOUT); // Sauvegarder TIMEOUT
     }
 }
 
@@ -164,6 +170,15 @@ void updateConfigParameter(const String &paramName, unsigned long paramValue) {
         saveConfigToEEPROM(trimmedParamName);
         Serial.print(F("PRESSURE_MAX: "));
         Serial.println(paramValue);
+    }  else if (trimmedParamName == "TIMEOUT") {
+        TIMEOUT = paramValue;
+        saveConfigToEEPROM(trimmedParamName);
+        Serial.print(F("TIMEOUT: "));
+        Serial.println(paramValue);
+    } else if (trimmedParamName == "RESET") {
+        resetConfig();
+    } else if (trimmedParamName == "VERSION") {
+        displayVersion();
     } else {
         Serial.println(F("Paramètre inconnu"));
     }
@@ -172,19 +187,20 @@ void updateConfigParameter(const String &paramName, unsigned long paramValue) {
 // Fonction pour réinitialiser les paramètres par défaut
 void resetConfig() {
     LOG_INTERVAL = 1;
-    FILE_MAX_SIZE = 4096;
+    FILE_MAX_SIZE = 2048;
     LUMIN = 1;
     TEMP_AIR = 1;
     HYGR = 1;
     PRESSURE = 1;
-    LUMIN_LOW = 0;
-    LUMIN_HIGH = 1000;
-    MIN_TEMP_AIR = 0;
-    MAX_TEMP_AIR = 100;
+    LUMIN_LOW = 255;
+    LUMIN_HIGH = 768;
+    MIN_TEMP_AIR = -10;
+    MAX_TEMP_AIR = 60;
     HYGR_MIN = 0;
-    HYGR_MAX = 100;
-    PRESSURE_MIN = 900;
-    PRESSURE_MAX = 1100;
+    HYGR_MAX = 50;
+    PRESSURE_MIN = 850;
+    PRESSURE_MAX = 1080;
+    TIMEOUT = 30;
 
     // Sauvegarder les valeurs par défaut dans l'EEPROM
     saveConfigToEEPROM("LOG_INTERVAL");
@@ -201,6 +217,9 @@ void resetConfig() {
     saveConfigToEEPROM("HYGR_MAX");
     saveConfigToEEPROM("PRESSURE_MIN");
     saveConfigToEEPROM("PRESSURE_MAX");
+    saveConfigToEEPROM("TIMEOUT");
+
+    Serial.println(F("Configuration réinitialisée aux valeurs par défaut."));
 }
 
 // Fonction pour afficher la version du programme

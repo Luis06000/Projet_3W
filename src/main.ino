@@ -47,6 +47,7 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
+    loadConfigFromEEPROM();
     // setupSDCard();
     // setupGPS();
 }
