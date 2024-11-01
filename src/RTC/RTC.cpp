@@ -1,109 +1,12 @@
-// #include "RTC.h"
-// #include <Wire.h>
-// #include <SPI.h>
-// #include "Config.h"
-
-// RTC::RTC() {}
-
-// // Variable pour suivre le temps écoulé
-// // unsigned long lastPrintTime = 0;
-
-// bool RTC::begin() {
-//     return rtc.begin();
-// }
-
-// bool RTC::isRunning() {
-//     return rtc.isrunning();
-// }
-
-// void RTC::printCurrentTime() {
-//     // Vérifier si le délai s'est écoulé depuis le dernier affichage
-//     // if (millis() - lastPrintTime >= LOG_INTERVAL) {
-//         // Met à jour le temps du dernier affichage
-//         // lastPrintTime = millis();
-
-//         // Récupérer l'heure actuelle
-//         DateTime now = rtc.now();
-
-//         // Afficher l'heure au format JJ/MM/AAAA HH:MM:SS
-//         Serial.print("Date: "); 
-//         Serial.print(now.day(), DEC);
-//         Serial.print('/');
-//         Serial.print(now.month(), DEC);
-//         Serial.print('/');
-//         Serial.print(now.year(), DEC);
-//         Serial.print(" Heure: ");
-//         Serial.print(now.hour(), DEC);
-//         Serial.print(':');
-//         Serial.print(now.minute(), DEC);
-//         Serial.print(':');
-//         Serial.println(now.second(), DEC);
-
-//         Serial.println();
-//     // }
-// }
-
-
-
-
-
-
-// #include "RTC.h"
-// #include <Wire.h>
-// #include <SPI.h>
-// #include "Config.h"
-
-// RTC::RTC() {}
-
-// // Variable pour suivre le temps écoulé
-// // unsigned long lastPrintTime = 0;
-
-// bool RTC::begin() {
-//     // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-//     return rtc.begin();
-// }
-
-// bool RTC::isRunning() {
-//     return rtc.isrunning();
-// }
-
-// void RTC::printCurrentTime() {
-//     // Vérifier si le délai s'est écoulé depuis le dernier affichage
-//     // if (millis() - lastPrintTime >= LOG_INTERVAL) {
-//         // Met à jour le temps du dernier affichage
-//         // lastPrintTime = millis();
-
-//         // Récupérer l'heure actuelle
-//         DateTime now = rtc.now();
-
-//         // Afficher l'heure au format JJ/MM/AAAA HH:MM:SS
-//         char buffer[32];
-//         snprintf(buffer, sizeof(buffer), "Date: %02d/%02d/%04d Heure: %02d:%02d:%02d", 
-//                  now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
-        
-//         // Afficher la date et l'heure formatées
-//         Serial.println(buffer);
-
-//     // }
-// }
-
-
-
-
-
-
-
-
 #include "RTC.h"
 #include <Wire.h>
 #include <SPI.h>
-#include "Config.h"
 
 RTC::RTC() {}
 
 bool RTC::begin() {
     if (!rtc.begin()) {
-        return false; // Si l'initialisation échoue, retourne faux
+        return false;
     }
 
     // Vérifier si l'horloge est en cours de fonctionnement
@@ -111,7 +14,7 @@ bool RTC::begin() {
         // Si elle n'est pas en marche, régler l'horloge sur la date et l'heure actuelles
         rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // Initialiser avec la date et l'heure de compilation
     }
-    return true; // Retourne vrai si tout s'est bien passé
+    return true;
 }
 
 bool RTC::isRunning() {
@@ -124,9 +27,7 @@ void RTC::printCurrentTime() {
 
     // Afficher l'heure au format JJ/MM/AAAA HH:MM:SS
     char buffer[33];
-    snprintf(buffer, sizeof(buffer), "Date: %02d/%02d/%04d Heure: %02d:%02d:%02d", 
+    snprintf(buffer, sizeof(buffer), "\nDate: %02d/%02d/%04d Heure: %02d:%02d:%02d", 
              now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
-    
-    // Afficher la date et l'heure formatées
     Serial.println(buffer);
 }

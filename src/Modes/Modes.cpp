@@ -129,6 +129,12 @@ const unsigned long buttonHoldDuration = 5000, inactivityDuration = 1800000;
 bool button1Lock = false, button2Lock = false;
 bool configModeLock = false; // Verrouillage pour le mode configuration
 
+void toUppercase(String &str) {
+    for (unsigned int i = 0; i < str.length(); i++) {
+        str[i] = toupper(str[i]);
+    }
+}
+
 // Affichage et paramétrage des LED en fonction des modes
 void setMode(Mode mode, int r, int g, int b) {
     currentMode = mode;
@@ -136,13 +142,14 @@ void setMode(Mode mode, int r, int g, int b) {
 }
 
 void modeConfiguration() {
-    Serial.println(F("Mode Configuration : Entrez le nom du paramètre et la valeur (exemple : LOG_INTERVALL 2)"));
+    Serial.println(F("Mode Configuration : Entrez le nom du paramètre et la valeur séparés par un espace"));
     bool button2State;
 
     configModeLock = true; // Verrouille le mode configuration
     while (true) {
         if (Serial.available() > 0) {
             String paramName = Serial.readStringUntil(' ');
+            toUppercase(paramName);
             unsigned long paramValue = Serial.parseInt();
             updateConfigParameter(paramName, paramValue);
             lastActivityTime = 0; // Reset last activity time

@@ -1,7 +1,10 @@
 #ifndef THP
 #define THP
 
+#include "Config.h"
 #include <Adafruit_BME280.h>
+#include <Wire.h>
+#include <SPI.h>
 
 class BME280Sensor {
 public:
@@ -11,9 +14,9 @@ public:
 
 private:
     Adafruit_BME280 bme;
-    float temperature;
-    float humidity;
-    float pressure;
+    float temperature{0.0};
+    float humidity{0.0};
+    float pressure{0.0};
 };
 
 #endif

@@ -47,7 +47,6 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
-    loadConfigFromEEPROM();
     // setupSDCard();
     // setupGPS();
 }
@@ -62,11 +61,20 @@ void loop() {
     //       delay(500);
     //     }
     // }
+    if (ERREUR) {
+        while (1)
+        {
+          setLEDColor(255, 0, 0);
+          delay(333);
+          setLEDColor(0, 255, 0);
+          delay(637);
+        }
+    };
     updateModes();
-    if (millis() - lastPrintTime >= LOG_INTERVAL) {
+    if (millis() - lastPrintTime >= (LOG_INTERVAL*60000)) {
         lastPrintTime = millis();
-        // rtcSensor.printCurrentTime();
-        lightSensor.printLightValue();
+        rtcSensor.printCurrentTime();
+        if (LUMIN) lightSensor.printLightValue();
         bmeSensor.readSensor();
         // logData();
         // readGPSData();

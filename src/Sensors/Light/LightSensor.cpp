@@ -1,12 +1,8 @@
 #include "LightSensor.h"
 #include <Arduino.h>
-#include "Config.h"
 
 // Constructeur par défaut
 LightSensor::LightSensor() {}
-
-// Variable pour suivre le temps écoulé
-// unsigned long lastLightPrintTime = 0;
 
 // Initialiser le capteur de lumière
 bool LightSensor::begin() {
@@ -14,23 +10,14 @@ bool LightSensor::begin() {
     return true;
 }
 
-// Vérifier si le capteur est "en marche"
+// Vérifier si le capteur est en marche fonctionnement
 bool LightSensor::isRunning() {
     return true;
 }
 
 // Afficher la valeur actuelle du capteur de lumière
 void LightSensor::printLightValue() {
-    // Vérifier si le délai s'est écoulé depuis la dernière mesure
-    // if (millis() - lastLightPrintTime >= LOG_INTERVAL) {
-        // Met à jour le temps du dernier affichage
-        // lastLightPrintTime = millis();
-
-        // Lire la valeur du capteur
-        int lightValue = analogRead(lightSensorPin);
-
-        // Afficher la valeur du capteur de lumière
-        Serial.print("\nValeur du capteur de lumière: ");
-        Serial.println(lightValue);
-    // }
+    int lightValue = analogRead(lightSensorPin);
+    Serial.print(F("Lumière: "));
+    Serial.println(lightValue);
 }
