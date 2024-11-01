@@ -113,9 +113,6 @@
 
 
 #include "Modes.h"
-#include "Config.h"
-#include "./LED/LED_control.h"
-#include "./Buttons/Button_control.h"
 
 // Déclarations externes et constantes
 Mode currentMode = MODE_STANDARD;
@@ -142,7 +139,8 @@ void setMode(Mode mode, int r, int g, int b) {
 }
 
 void modeConfiguration() {
-    Serial.println(F("Mode Configuration : Entrez le nom du paramètre et la valeur séparés par un espace"));
+    Serial.println(F("\nEntrez le nom du paramètre et sa nouvelle valeur, séparés par un espace:\n"));
+    Config();
     bool button2State;
 
     configModeLock = true; // Verrouille le mode configuration
@@ -150,7 +148,7 @@ void modeConfiguration() {
         if (Serial.available() > 0) {
             String paramName = Serial.readStringUntil(' ');
             toUppercase(paramName);
-            unsigned long paramValue = Serial.parseInt();
+            int paramValue = Serial.parseInt();
             updateConfigParameter(paramName, paramValue);
             lastActivityTime = 0; // Reset last activity time
         }

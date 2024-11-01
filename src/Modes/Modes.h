@@ -1,7 +1,9 @@
 #ifndef MODES_H
 #define MODES_H
 
+#include "Config.h"
 #include "./LED/LED_control.h"
+#include "./Buttons/Button_control.h"
 #include <Arduino.h>
 #include <ctype.h>
 

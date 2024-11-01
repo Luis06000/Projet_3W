@@ -26,6 +26,7 @@ unsigned long lastPrintTime = 0;
 
 void setup() {
     Serial.begin(9600);
+    // Wire.begin();
     if (!rtcSensor.begin()) {
         while (1)
         {
@@ -47,7 +48,6 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
-    loadConfigFromEEPROM();
     // setupSDCard();
     // setupGPS();
 }
@@ -72,10 +72,10 @@ void loop() {
         }
     };
     updateModes();
-    if (millis() - lastPrintTime >= (LOG_INTERVAL*60000)) {
+    if (millis() - lastPrintTime >= (params.LOG_INTERVAL*60000)) {
         lastPrintTime = millis();
         rtcSensor.printCurrentTime();
-        if (LUMIN) lightSensor.printLightValue();
+        if (params.LUMIN) lightSensor.printLightValue();
         bmeSensor.readSensor();
         // logData();
         // readGPSData();

@@ -20,3 +20,26 @@ private:
 };
 
 #endif
+
+
+
+
+
+
+
+
+// #ifndef THP
+// #define THP
+
+// #include "Config.h"
+// #include <Wire.h>
+// #include <SPI.h>
+
+// #define BME280_ADDRESS 0x76
+
+// bool beginBME280();
+// void initializeBME280();
+// void readBME280Data();
+// void readCalibrationData();
+
+// #endif
