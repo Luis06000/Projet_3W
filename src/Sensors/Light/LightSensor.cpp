@@ -1,4 +1,5 @@
 #include "LightSensor.h"
+#include "Config.h"
 #include <Arduino.h>
 
 // Constructeur par défaut
@@ -17,5 +18,10 @@ bool LightSensor::isRunning() {
 
 // Afficher la valeur actuelle du capteur de lumière
 int LightSensor::LightValue() {
-    return analogRead(lightSensorPin);
+    light = analogRead(lightSensorPin);
+    
+    if (light < params.LUMIN_LOW || light > params.LUMIN_HIGH) {
+        ERREUR = 1;  // Définir ERREUR à 1 si l'humidité est hors limites
+    }
+    return light;
 }

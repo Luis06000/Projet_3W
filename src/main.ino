@@ -74,13 +74,19 @@ void loop() {
     //     readGPSData();
     //     // logData();
     // }
-    if (currentMode==MODE_STANDARD) {
+    if (currentMode==MODE_MAINTENANCE) {
         if ((millis() - lastPrintTime) >= (params.LOG_INTERVAL*60000)) {
             lastPrintTime = millis();
-            Serial.print(rtcSensor.currentTime()), Serial.print(" ");
-            if (params.LUMIN) Serial.print("Lumière:"), Serial.print(lightSensor.LightValue()), Serial.print(" ");
-            // bmeSensor.readSensor();
-            // readGPSData();
+            Serial.print(rtcSensor.currentTime()), Serial.print(F(" "));
+            if (params.LUMIN) Serial.print(F("Lumière:")), Serial.print(lightSensor.LightValue()), Serial.print(F(" "));
+            if (params.TEMP_AIR) Serial.print(F("T:")), Serial.print(bmeSensor.Temperature()), Serial.print(F(" °C")), Serial.print(F(" "));
+            if (params.HYGR) Serial.print(F("H:")), Serial.print(bmeSensor.Humidity()), Serial.print(F(" %")), Serial.print(F(" "));
+            if (params.PRESSURE) Serial.print(F("P:")), Serial.print(bmeSensor.Pressure()), Serial.print(F(" hPa")), Serial.print(F(" "));
+            readGPSData();
+            if (Latitude()!=0) Serial.print(F("Latitude:")), Serial.print(Latitude()), Serial.print(F(" "));
+            else Serial.print(F("Latitude: NA "));
+            if (Longitude()!=0) Serial.print(F("Longitude:")), Serial.print(Longitude()), Serial.print(F(" "));
+            else Serial.print(F("Longitude: NA "));
         }
     }
 }

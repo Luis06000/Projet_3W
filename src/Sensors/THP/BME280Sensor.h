@@ -9,7 +9,9 @@ class BME280Sensor {
 public:
     BME280Sensor();  // Constructeur
     bool begin();  // Initialisation du capteur
-    void readSensor();  // Lire les données du capteur
+    float Temperature();
+    float Humidity();
+    float Pressure();
 
 private:
     Adafruit_BME280 bme;

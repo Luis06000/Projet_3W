@@ -4,26 +4,28 @@
 SoftwareSerial gpsSerial(2, 3);
 TinyGPSPlus gps;
 
+float latitude = 0.0;
+float longitude = 0.0;
+
 void setupGPS() {
     gpsSerial.begin(9600);  // Initialiser le port série logiciel pour le GPS
-}
-
-void displayInfo() {
-    Serial.print(F("Location: ")); 
-    if (gps.location.isValid()) {
-        Serial.print(gps.location.lat(), 6);
-        Serial.print(F(","));
-        Serial.print(gps.location.lng(), 6);
-    } else {
-        Serial.print(F("NA"));
-    }
-    Serial.println();
 }
 
 void readGPSData() {
     while (gpsSerial.available() > 0) {
         if (gps.encode(gpsSerial.read())) { // Si une phrase NMEA complète est décodée
-            displayInfo();   // Affiche les informations GPS
+            if (gps.location.isValid()) {
+                longitude = gps.location.lng();  // Assigner la valeur correctement
+                latitude = gps.location.lat();   // Assigner la valeur correctement
+            }
         }
     }
+}
+
+float Latitude() {
+    return latitude;
+}
+
+float Longitude() {
+    return longitude;
 }

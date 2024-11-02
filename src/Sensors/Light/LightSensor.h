@@ -13,6 +13,7 @@ public:
 
 private:
     int lightSensorPin = A0;
+    int light;
 };
 
 #endif // LIGHT_H
