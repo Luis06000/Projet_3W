@@ -1,31 +1,3 @@
-// #include "Button_control.h"
-// #include <Arduino.h>
-
-// // Variable globale pour l'état des boutons (volatile pour les interruptions)
-// volatile bool ledOn = false;
-
-// void initButtons() {
-//   // Configurer les interruptions
-//   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
-//   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
-  
-//   // Attacher les interruptions aux boutons
-//   attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), handleButton1Press, FALLING);
-//   attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), handleButton2Press, FALLING);
-// }
-
-// void handleButton1Press() {
-//   ledOn = true;  // Bouton 1 pressé, allumer la LED
-// }
-
-// void handleButton2Press() {
-//   ledOn = false;  // Bouton 2 pressé, éteindre la LED
-// }
-
-
-
-
-
 #include "Button_control.h"
 #include <Arduino.h>
 

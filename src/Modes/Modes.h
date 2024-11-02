@@ -12,9 +12,6 @@ extern Mode currentMode;
 
 void initModes();
 void updateModes();
-void modeStandard();
-void modeEconomique();
-void modeMaintenance();
 void modeConfiguration();
 
 #endif // MODES_H

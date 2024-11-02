@@ -9,7 +9,7 @@ public:
     LightSensor();  // Constructeur
     bool begin();   // Initialiser le capteur de lumière
     bool isRunning();  // Vérifier si le capteur est en marche
-    void printLightValue();  // Afficher la valeur du capteur de lumière
+    int LightValue();  // Afficher la valeur du capteur de lumière
 
 private:
     int lightSensorPin = A0;

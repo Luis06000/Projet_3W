@@ -8,12 +8,17 @@ public:
     RTC();  // Constructeur
     bool begin();  // Initialiser le module RTC
     bool isRunning();  // Vérifier si l'horloge est en marche
-    void printCurrentTime();  // Afficher l'heure actuelle
+    const char* currentTime();  // Retourner l'heure formatée
     void adjustClock(int newHour, int newMinute, int newSecond);
     void adjustDate(int newMonth, int newDay, int newYear);
+    void resetRTC();
+
+    RTC_DS1307 rtc;  // Instance de RTC_DS1307
 
 private:
-    RTC_DS1307 rtc;  // Instance de RTC_DS1307
+    char buffer[33];
 };
+
+extern RTC rtcSensor;
 
 #endif

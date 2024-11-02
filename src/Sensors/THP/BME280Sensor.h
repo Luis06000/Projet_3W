@@ -1,7 +1,6 @@
 #ifndef THP
 #define THP
 
-#include "Config.h"
 #include <Adafruit_BME280.h>
 #include <Wire.h>
 #include <SPI.h>

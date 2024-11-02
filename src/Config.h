@@ -42,15 +42,14 @@
 
 #include "RTC/RTC.h"
 #include <Arduino.h>
-#include <EEPROM.h>
 
 struct Params {
-    int LOG_INTERVAL;
-    int FILE_MAX_SIZE;
-    int TIMEOUT;
+    unsigned int LOG_INTERVAL;
+    unsigned int FILE_MAX_SIZE;
+    unsigned int TIMEOUT;
     bool LUMIN;
-    int LUMIN_LOW;
-    int LUMIN_HIGH;
+    unsigned int LUMIN_LOW;
+    unsigned int LUMIN_HIGH;
     bool TEMP_AIR;
     int MIN_TEMP_AIR;
     int MAX_TEMP_AIR;
@@ -58,8 +57,8 @@ struct Params {
     int HYGR_MIN;
     int HYGR_MAX;
     bool PRESSURE;
-    int PRESSURE_MIN;
-    int PRESSURE_MAX;
+    unsigned int PRESSURE_MIN;
+    unsigned int PRESSURE_MAX;
 };
 
 struct Version {

@@ -16,8 +16,6 @@ bool LightSensor::isRunning() {
 }
 
 // Afficher la valeur actuelle du capteur de lumière
-void LightSensor::printLightValue() {
-    int lightValue = analogRead(lightSensorPin);
-    Serial.print(F("Lumière: "));
-    Serial.println(lightValue);
+int LightSensor::LightValue() {
+    return analogRead(lightSensorPin);
 }

@@ -21,15 +21,13 @@ bool RTC::isRunning() {
     return rtc.isrunning();
 }
 
-void RTC::printCurrentTime() {
-    // Récupérer l'heure actuelle
-    DateTime now = rtc.now();
+const char* RTC::currentTime() {
+    DateTime now = rtc.now(); // Récupérer l'heure actuelle
 
-    // Afficher l'heure au format JJ/MM/AAAA HH:MM:SS
-    char buffer[33];
-    snprintf(buffer, sizeof(buffer), "\nDate: %02d/%02d/%04d Heure: %02d:%02d:%02d", 
+    snprintf(buffer, sizeof(buffer), "\n%02d/%02d/%04d %02d:%02d:%02d", 
              now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
-    Serial.println(buffer);
+
+    return buffer;
 }
 
 void RTC::adjustClock(int newHour, int newMinute, int newSecond) {
@@ -40,4 +38,9 @@ void RTC::adjustClock(int newHour, int newMinute, int newSecond) {
 void RTC::adjustDate(int newYear, int newMonth, int newDay) {
     DateTime now = rtc.now();
     rtc.adjust(DateTime(newYear, newMonth, newDay, now.hour(), now.minute(), now.second()));
+}
+
+void RTC::resetRTC() {
+    DateTime now = rtc.now();
+    rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second()));
 }

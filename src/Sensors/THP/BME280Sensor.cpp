@@ -94,6 +94,7 @@
 
 
 
+#include "Config.h"
 #include "BME280Sensor.h"
 
 // Constructeur par défaut

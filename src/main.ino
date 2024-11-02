@@ -8,12 +8,7 @@
 #include "./SDCard/SDCard.h"
 #include "./GPS/GPS.h"
 
-#include <Adafruit_I2CDevice.h>
-#include <SPI.h>
-#include "Wire.h"
-#include <SPI.h>
-#include "AsyncDelay.h"
-#include "ChainableLED.h"
+#include <SoftwareSerial.h>
 
 
 RTC rtcSensor;
@@ -21,12 +16,11 @@ BME280Sensor bmeSensor;
 LightSensor lightSensor;
 
 
-unsigned long lastPrintTime = 0;
+long lastPrintTime = 0;
 
 
 void setup() {
     Serial.begin(9600);
-    // Wire.begin();
     if (!rtcSensor.begin()) {
         while (1)
         {
@@ -48,8 +42,8 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
+    setupGPS();
     // setupSDCard();
-    // setupGPS();
 }
 
 void loop() {
@@ -62,22 +56,31 @@ void loop() {
     //       delay(500);
     //     }
     // }
-    if (ERREUR) {
-        while (1)
-        {
-          setLEDColor(255, 0, 0);
-          delay(333);
-          setLEDColor(0, 255, 0);
-          delay(637);
-        }
-    };
+    // if (ERREUR) {
+    //     while (1)
+    //     {
+    //       setLEDColor(255, 0, 0);
+    //       delay(333);
+    //       setLEDColor(0, 255, 0);
+    //       delay(637);
+    //     }
+    // };
     updateModes();
-    if (millis() - lastPrintTime >= (params.LOG_INTERVAL*60000)) {
-        lastPrintTime = millis();
-        rtcSensor.printCurrentTime();
-        if (params.LUMIN) lightSensor.printLightValue();
-        bmeSensor.readSensor();
-        // logData();
-        // readGPSData();
+    // if ((millis() - lastPrintTime) >= (params.LOG_INTERVAL*60000)) {
+    //     lastPrintTime = millis();
+    //     rtcSensor.printCurrentTime();
+    //     if (params.LUMIN) lightSensor.printLightValue();
+    //     bmeSensor.readSensor();
+    //     readGPSData();
+    //     // logData();
+    // }
+    if (currentMode==MODE_STANDARD) {
+        if ((millis() - lastPrintTime) >= (params.LOG_INTERVAL*60000)) {
+            lastPrintTime = millis();
+            Serial.print(rtcSensor.currentTime()), Serial.print(" ");
+            if (params.LUMIN) Serial.print("Lumière:"), Serial.print(lightSensor.LightValue()), Serial.print(" ");
+            // bmeSensor.readSensor();
+            // readGPSData();
+        }
     }
 }

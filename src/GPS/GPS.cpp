@@ -1,7 +1,7 @@
 #include "GPS.h"
 
 // Initialisation des variables globales
-SoftwareSerial gpsSerial(3, 4);
+SoftwareSerial gpsSerial(2, 3);
 TinyGPSPlus gps;
 
 void setupGPS() {
@@ -15,16 +15,14 @@ void displayInfo() {
         Serial.print(F(","));
         Serial.print(gps.location.lng(), 6);
     } else {
-        Serial.print(F("INVALID"));
+        Serial.print(F("NA"));
     }
     Serial.println();
 }
 
 void readGPSData() {
-    // Lire les données du GPS via le port série logiciel
     while (gpsSerial.available() > 0) {
-        char c = gpsSerial.read();
-        if (gps.encode(c)) { // Si une phrase NMEA complète est décodée
+        if (gps.encode(gpsSerial.read())) { // Si une phrase NMEA complète est décodée
             displayInfo();   // Affiche les informations GPS
         }
     }

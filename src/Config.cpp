@@ -240,8 +240,7 @@
 
 
 #include "Config.h"
-
-RTC rtcSensor;
+#include <EEPROM.h>
 
 const unsigned char EEPROM_FLAG = 0x42;
 bool ERREUR = 0;
@@ -335,7 +334,7 @@ void updateConfigParameter(const String &paramName, int paramValue) {
     else if (paramName=="RESET") resetConfig();
     else if (paramName=="VERSION") displayVersion();
     else if (paramName == "CLOCK") {
-        int newHour = Serial.parseInt();
+        int newHour = paramValue;
         int newMinute = Serial.parseInt();
         int newSecond = Serial.parseInt();
         if (newHour >= 0 && newHour < 24 && newMinute >= 0 && newMinute < 60 && newSecond >= 0 && newSecond < 60) {
@@ -343,7 +342,7 @@ void updateConfigParameter(const String &paramName, int paramValue) {
             hasChanged = true;
         }
     } else if (paramName == "DATE") {
-        int newYear = Serial.parseInt();
+        int newYear = paramValue;
         int newMonth = Serial.parseInt();
         int newDay = Serial.parseInt();
         if (newYear >= 0 && newMonth > 0 && newMonth <= 12 && newDay > 0 && newDay <= 31) {
@@ -357,6 +356,7 @@ void updateConfigParameter(const String &paramName, int paramValue) {
 }
 
 void resetConfig() {
+    rtcSensor.resetRTC();
     params.LOG_INTERVAL = 1;
     params.FILE_MAX_SIZE = 2048;
     params.TIMEOUT = 30;
