@@ -44,18 +44,18 @@
 #include <Arduino.h>
 
 struct Params {
-    unsigned int LOG_INTERVAL;
+    uint8_t LOG_INTERVAL;
     unsigned int FILE_MAX_SIZE;
-    unsigned int TIMEOUT;
+    uint8_t TIMEOUT;
     bool LUMIN;
-    unsigned int LUMIN_LOW;
-    unsigned int LUMIN_HIGH;
+    int LUMIN_LOW;
+    int LUMIN_HIGH;
     bool TEMP_AIR;
-    int MIN_TEMP_AIR;
-    int MAX_TEMP_AIR;
+    int8_t MIN_TEMP_AIR;
+    int8_t MAX_TEMP_AIR;
     bool HYGR;
-    int HYGR_MIN;
-    int HYGR_MAX;
+    int8_t HYGR_MIN;
+    int8_t HYGR_MAX;
     bool PRESSURE;
     unsigned int PRESSURE_MIN;
     unsigned int PRESSURE_MAX;

@@ -4,12 +4,21 @@
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
 
-extern float longitude;
-extern float latitude;
+class GPSSensor {
+public:
+    GPSSensor();
+    void setup();
+    void readData();
+    float Longitude();
+    float Latitude();
+    uint8_t InvalidLocationCount();
 
-void setupGPS();
-void readGPSData();
-float Longitude();
-float Latitude();
+private:
+    SoftwareSerial gpsSerial;
+    TinyGPSPlus gps;
+    float latitude;
+    float longitude;
+    uint8_t invalidLocationCount;
+};
 
 #endif // GPS_H

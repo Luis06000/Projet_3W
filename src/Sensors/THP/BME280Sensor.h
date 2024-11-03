@@ -5,19 +5,18 @@
 #include <Wire.h>
 #include <SPI.h>
 
+extern uint8_t invalidBMECount;
+
 class BME280Sensor {
 public:
-    BME280Sensor();  // Constructeur
-    bool begin();  // Initialisation du capteur
+    BME280Sensor();
+    bool begin();
     float Temperature();
     float Humidity();
     float Pressure();
 
 private:
     Adafruit_BME280 bme;
-    float temperature{0.0};
-    float humidity{0.0};
-    float pressure{0.0};
 };
 
 #endif

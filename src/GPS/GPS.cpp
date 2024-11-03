@@ -1,31 +1,34 @@
 #include "GPS.h"
+#include "Config.h"
 
-// Initialisation des variables globales
-SoftwareSerial gpsSerial(2, 3);
-TinyGPSPlus gps;
+// Constructeur
+GPSSensor::GPSSensor() : gpsSerial(2, 3), latitude(0.0), longitude(0.0), invalidLocationCount(0) {}
 
-float latitude = 0.0;
-float longitude = 0.0;
-
-void setupGPS() {
-    gpsSerial.begin(9600);  // Initialiser le port série logiciel pour le GPS
+void GPSSensor::setup() {
+    gpsSerial.begin(9600);
 }
 
-void readGPSData() {
-    while (gpsSerial.available() > 0) {
-        if (gps.encode(gpsSerial.read())) { // Si une phrase NMEA complète est décodée
-            if (gps.location.isValid()) {
-                longitude = gps.location.lng();  // Assigner la valeur correctement
-                latitude = gps.location.lat();   // Assigner la valeur correctement
+void GPSSensor::readData() {
+    unsigned long startTime = millis();
+
+    while (millis() - startTime < params.TIMEOUT * 1000) {
+        while (gpsSerial.available() > 0) {
+            if (gps.encode(gpsSerial.read())) {
+                if (gps.location.isValid()) longitude = gps.location.lng(), latitude = gps.location.lat(), invalidLocationCount = 0;
+                else invalidLocationCount++;
             }
         }
     }
 }
 
-float Latitude() {
+float GPSSensor::Latitude() {
     return latitude;
 }
 
-float Longitude() {
+float GPSSensor::Longitude() {
     return longitude;
+}
+
+uint8_t GPSSensor::InvalidLocationCount() {
+    return invalidLocationCount;
 }

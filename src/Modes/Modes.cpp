@@ -11,13 +11,13 @@ bool button1Lock = false, button2Lock = false;
 bool configModeLock = false;
 
 void toUppercase(String &str) {
-    for (unsigned int i = 0; i < str.length(); i++) {
+    for (uint8_t i = 0; i < str.length(); i++) {
         str[i] = toupper(str[i]);
     }
 }
 
 // Affichage et paramétrage des LED en fonction des modes
-void setMode(Mode mode, int r, int g, int b) {
+void setMode(Mode mode, uint8_t r, uint8_t g, uint8_t b) {
     currentMode = mode;
     setLEDColor(r, g, b);
 }

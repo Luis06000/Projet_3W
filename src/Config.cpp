@@ -334,22 +334,22 @@ void updateConfigParameter(const String &paramName, int paramValue) {
     else if (paramName=="RESET") resetConfig();
     else if (paramName=="VERSION") displayVersion();
     else if (paramName == "CLOCK") {
-        int newHour = paramValue;
-        int newMinute = Serial.parseInt();
-        int newSecond = Serial.parseInt();
+        uint8_t newHour = paramValue;
+        uint8_t newMinute = Serial.parseInt();
+        uint8_t newSecond = Serial.parseInt();
         if (newHour >= 0 && newHour < 24 && newMinute >= 0 && newMinute < 60 && newSecond >= 0 && newSecond < 60) {
             rtcSensor.adjustClock(newHour, newMinute, newSecond);
             hasChanged = true;
         }
     } else if (paramName == "DATE") {
         int newYear = paramValue;
-        int newMonth = Serial.parseInt();
-        int newDay = Serial.parseInt();
+        uint8_t newMonth = Serial.parseInt();
+        uint8_t newDay = Serial.parseInt();
         if (newYear >= 0 && newMonth > 0 && newMonth <= 12 && newDay > 0 && newDay <= 31) {
             rtcSensor.adjustDate(newYear, newMonth, newDay);
             hasChanged = true;
         }
-    }
+    } else if (paramName=="DAY") hasChanged=1;
     else Serial.println(F("Paramètre inconnu ou valeur incorrecte."));
     EEPROM.put(1, params);
     if (hasChanged) Serial.println(F("Nouvelle onfiguration sauvegardée."));

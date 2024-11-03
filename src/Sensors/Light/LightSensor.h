@@ -12,7 +12,7 @@ public:
     int LightValue();  // Afficher la valeur du capteur de lumière
 
 private:
-    int lightSensorPin = A0;
+    uint8_t lightSensorPin = A0;
     int light;
 };
 
