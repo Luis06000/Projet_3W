@@ -8,11 +8,9 @@ constexpr uint8_t NUM_LEDS = 5;
 
 // Déclaration de l'objet leds
 extern ChainableLED leds;
-extern volatile bool ledOn;
 
 // Déclaration des fonctions
 void initLEDs();
-void updateLEDs();
 void setLEDColor(uint8_t r, uint8_t g, uint8_t b);
 
 #endif // LED_CONTROL_H

@@ -1,36 +1,54 @@
 #include "Button_control.h"
-#include <Arduino.h>
 
-// Variables globales pour l'état des boutons et la gestion du debounce
-volatile bool ledOn = false;
-volatile bool buttonPressed = false;
-const unsigned long debounceDelay = 50;  // Délai pour éviter les rebonds
-volatile unsigned long lastDebounceTime1 = 0;
-volatile unsigned long lastDebounceTime2 = 0;
+// Initialisation des variables statiques
+uint8_t ButtonControl::status = 0;
+uint8_t ButtonControl::debounceCount = 0;
+
+// Constantes
+static const uint8_t DEBOUNCE_THRESHOLD = 5;
 
 void initButtons() {
-    pinMode(BUTTON_1_PIN, INPUT_PULLUP);  // Utilisation de la résistance pull-up interne
+    // Configuration des pins
+    pinMode(BUTTON_1_PIN, INPUT_PULLUP);
     pinMode(BUTTON_2_PIN, INPUT_PULLUP);
 
-    // Attacher les interruptions pour chaque bouton
     attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1Interrupt, FALLING);
     attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), button2Interrupt, FALLING);
 }
 
 void button1Interrupt() {
-    unsigned long currentTime = millis();
-    if (currentTime - lastDebounceTime1 > debounceDelay) {
-        buttonPressed = true;
-        ledOn = true;  // Allumer la LED quand le bouton 1 est pressé
-        lastDebounceTime1 = currentTime;  // Mettre à jour le dernier temps de debounce
+    if (!(ButtonControl::status & BTN_1_DEBOUNCE)) {
+        ButtonControl::status |= BTN_1_PRESSED | BTN_1_DEBOUNCE;
+        ButtonControl::debounceCount = DEBOUNCE_THRESHOLD;
     }
 }
 
 void button2Interrupt() {
-    unsigned long currentTime = millis();
-    if (currentTime - lastDebounceTime2 > debounceDelay) {
-        buttonPressed = true;
-        ledOn = false;  // Éteindre la LED quand le bouton 2 est pressé
-        lastDebounceTime2 = currentTime;  // Mettre à jour le dernier temps de debounce
+    if (!(ButtonControl::status & BTN_2_DEBOUNCE)) {
+        ButtonControl::status |= BTN_2_PRESSED | BTN_2_DEBOUNCE;
+        ButtonControl::debounceCount = DEBOUNCE_THRESHOLD;
+    }
+}
+
+// Fonctions utilitaires
+bool isButton1Pressed() {
+    bool pressed = ButtonControl::status & BTN_1_PRESSED;
+    ButtonControl::status &= ~BTN_1_PRESSED;
+    return pressed;
+}
+
+bool isButton2Pressed() {
+    bool pressed = ButtonControl::status & BTN_2_PRESSED;
+    ButtonControl::status &= ~BTN_2_PRESSED;
+    return pressed;
+}
+
+// Fonction à appeler dans la boucle principale pour gérer le debounce
+void updateButtons() {
+    if (ButtonControl::debounceCount > 0) {
+        ButtonControl::debounceCount--;
+        if (ButtonControl::debounceCount == 0) {
+            ButtonControl::status &= ~(BTN_1_DEBOUNCE | BTN_2_DEBOUNCE);
+        }
     }
 }

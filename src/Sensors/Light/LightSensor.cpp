@@ -1,27 +1,36 @@
 #include "LightSensor.h"
 #include "Config.h"
-#include <Arduino.h>
 
-// Constructeur par défaut
-LightSensor::LightSensor() {}
+LightSensor::LightSensor() : errorCount(0) {
+    data.value = 0;
+    data.valid = false;
+}
 
-// Initialiser le capteur de lumière
 bool LightSensor::begin() {
-    pinMode(lightSensorPin, INPUT_PULLUP);
+    pinMode(SENSOR_PIN, INPUT);
     return true;
 }
 
-// Vérifier si le capteur est en marche fonctionnement
-bool LightSensor::isRunning() {
-    return true;
-}
-
-// Afficher la valeur actuelle du capteur de lumière
-int LightSensor::LightValue() {
-    light = analogRead(lightSensorPin);
+const LightData& LightSensor::readData() {
+    uint16_t reading = analogRead(SENSOR_PIN);
     
-    if (light < params.LUMIN_LOW || light > params.LUMIN_HIGH) {
-        ERREUR = 1;  // Définir ERREUR à 1 si l'humidité est hors limites
+    data.valid = validateReading(reading);
+    
+    if (data.valid) {
+        data.value = reading;
+        errorCount = 0;
+    } else {
+        errorCount++;
     }
-    return light;
+    
+    return data;
 }
+
+bool LightSensor::validateReading(uint16_t value) {
+    if (!(params.flags & FLAG_LUMIN)) return false;
+    if (value < params.LUMIN_LOW || value > params.LUMIN_HIGH) {
+        return false;
+    }
+    return true;
+}
+ 

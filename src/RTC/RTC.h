@@ -10,18 +10,15 @@ public:
     bool isRunning();
     void setDefaultTime();
     const char* currentTime();
-    void adjustClock(uint8_t newHour, uint8_t newMinute, uint8_t newSecond);
-    void adjustDate(uint8_t newMonth, uint8_t newDay, int newYear);
+    void adjustTime(uint8_t hour, uint8_t min, uint8_t sec);
+    void adjustDate(uint8_t month, uint8_t day, uint16_t year);
     void resetRTC();
-
-    RTC_DS1307 rtc;  // Instance de RTC_DS1307
+    DateTime now();
 
 private:
+    RTC_DS1307 rtc;
     char buffer[20];
-    DateTime defaultTime;
+    uint32_t defaultTime;
 };
-
-extern RTC rtcSensor;
-extern RTC_DS1307 rtc;
 
 #endif

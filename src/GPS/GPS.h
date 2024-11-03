@@ -6,18 +6,20 @@
 
 class GPSSensor {
 public:
-    GPSSensor();
-    void setup();
+    GPSSensor(uint8_t rxPin = 10, uint8_t txPin = 11);
+    bool begin();
     void readData();
     float Longitude();
     float Latitude();
     uint8_t InvalidLocationCount();
+    bool hasValidData();
 
 private:
     SoftwareSerial gpsSerial;
     TinyGPSPlus gps;
     float latitude;
     float longitude;
+    bool validData;
     uint8_t invalidLocationCount;
 };
 

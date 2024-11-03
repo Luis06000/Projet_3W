@@ -26,5 +26,5 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b %ERRORLEVEL%
 )
 
-echo Autocompilation et televersement termines avec succès.
+echo Autocompilation et televersement termines avec succes.
 pause

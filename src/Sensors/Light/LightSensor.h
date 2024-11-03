@@ -3,17 +3,23 @@
 
 #include <Arduino.h>
 
-// Définition de la classe LightSensor
-class LightSensor {
-public:
-    LightSensor();  // Constructeur
-    bool begin();   // Initialiser le capteur de lumière
-    bool isRunning();  // Vérifier si le capteur est en marche
-    int LightValue();  // Afficher la valeur du capteur de lumière
-
-private:
-    uint8_t lightSensorPin = A0;
-    int light;
+struct LightData {
+    uint16_t value;
+    bool valid;
 };
 
-#endif // LIGHT_H
+class LightSensor {
+public:
+    LightSensor();
+    bool begin();
+    const LightData& readData();
+    uint8_t InvalidLightCount() const { return errorCount; }
+
+private:
+    static const uint8_t SENSOR_PIN = A0;
+    LightData data;
+    uint8_t errorCount;
+    bool validateReading(uint16_t value);
+};
+
+#endif
