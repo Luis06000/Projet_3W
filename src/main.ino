@@ -48,14 +48,14 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
-    if (!gps.begin()) {
-        while (1) {
-            setLEDColor(255, 0, 0);
-            delay(333);
-            setLEDColor(255, 255, 0);
-            delay(667);
-        }
-    }
+    // if (!gps.begin()) {
+    //     while (1) {
+    //         setLEDColor(255, 0, 0);
+    //         delay(333);
+    //         setLEDColor(255, 255, 0);
+    //         delay(667);
+    //     }
+    // }
 }
 
 void loop() {
