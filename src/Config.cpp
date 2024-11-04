@@ -7,7 +7,7 @@ const unsigned char EEPROM_FLAG = 0x42;
 bool ERREUR = 0;
 
 struct Params params = {
-    .LOG_INTERVAL = 1,
+    .LOG_INTERVAL = 10,
     .FILE_MAX_SIZE = 2048,
     .TIMEOUT = 30,
     .flags = FLAG_LUMIN | FLAG_TEMP_AIR | FLAG_HYGR | FLAG_PRESSURE,
@@ -99,7 +99,7 @@ void resetConfig() {
     rtc.resetRTC();
     
     params.flags = FLAG_LUMIN | FLAG_TEMP_AIR | FLAG_HYGR | FLAG_PRESSURE;
-    params.LOG_INTERVAL = 1;
+    params.LOG_INTERVAL = 10;
     params.FILE_MAX_SIZE = 2048;
     params.TIMEOUT = 30;
     params.LUMIN_LOW = 255;

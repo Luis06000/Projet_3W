@@ -5,23 +5,8 @@ GPSSensor::GPSSensor(uint8_t rxPin, uint8_t txPin)
     : gpsSerial(rxPin, txPin), latitude(0.0), longitude(0.0), 
       validData(false), invalidLocationCount(0) {}
 
-bool GPSSensor::begin() {
+void GPSSensor::begin() {
     gpsSerial.begin(9600);
-    
-    // Attend un peu pour la stabilisation
-    delay(100);
-    
-    // Vérifie si on reçoit des données NMEA
-    unsigned long startTime = millis();
-    while (millis() - startTime < 1000) {
-        if (gpsSerial.available()) {
-            char c = gpsSerial.read();
-            if (c == '$') {  // Début d'une trame NMEA
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 void GPSSensor::readData() {

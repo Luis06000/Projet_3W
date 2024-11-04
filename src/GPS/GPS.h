@@ -6,8 +6,8 @@
 
 class GPSSensor {
 public:
-    GPSSensor(uint8_t rxPin = 10, uint8_t txPin = 11);
-    bool begin();
+    GPSSensor(uint8_t rxPin = 3, uint8_t txPin = 4);
+    void begin();
     void readData();
     float Longitude();
     float Latitude();

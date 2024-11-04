@@ -48,14 +48,7 @@ void setup() {
     initButtons();
     initModes();
     initLEDs();
-    // if (!gps.begin()) {
-    //     while (1) {
-    //         setLEDColor(255, 0, 0);
-    //         delay(333);
-    //         setLEDColor(255, 255, 0);
-    //         delay(667);
-    //     }
-    // }
+    gps.begin();
 }
 
 void loop() {
@@ -85,19 +78,27 @@ void loop() {
           delay(667);
         }
     };
+    if (gps.InvalidLocationCount() >= 1) {
+        while (1) {
+            setLEDColor(255, 0, 0);
+            delay(333);
+            setLEDColor(255, 255, 0);
+            delay(667);
+        }
+    }
 
     static unsigned long lastPrintTime = 0;
-    static bool skipGPS = false;
-    unsigned long interval = params.LOG_INTERVAL * 60000UL; //////////////////////////////////////////
+    // static bool skipGPS = false;
+    unsigned long interval = (params.LOG_INTERVAL * 60000UL); //////////////////////////////////////////
     const BME280Data& sensorData = bmeSensor.readData();
     updateModes();
 
 
     // // ENREGISTREMENT DES DONNEES STANDARD ET ECONOMY
-    // if (currentMode == MODE_ECONOMY) interval *= 2;
+    if (currentMode == MODE_ECONOMY) interval *= 2;
 
-    // if ((millis() - lastPrintTime) >= interval) {
-    //     lastPrintTime = millis();
+    if ((millis() - lastPrintTime) >= interval) {
+        lastPrintTime = millis();
         
     //     if (currentMode == MODE_STANDARD || (currentMode == MODE_ECONOMY && !skipGPS)) gps.readData();
     //     if (sdCard.isFunctional()) {
@@ -173,9 +174,7 @@ void loop() {
 
 
     // AFFICHAGE DES DONNEES MAINTENANCE
-    if (currentMode==MODE_MAINTENANCE) { /////////////////////////////////////////////////////////////////
-        if ((millis() - lastPrintTime) >= interval) {
-            lastPrintTime = millis();
+        if (currentMode==MODE_MAINTENANCE) { /////////////////////////////////////////////////////////////////
             Serial.println(), Serial.print(rtc.currentTime()), Serial.print(F(" "));
             if (params.flags & FLAG_LUMIN) {
                 Serial.print(F("Lumière:"));
@@ -209,6 +208,5 @@ void loop() {
             else Serial.print(F("Longitude:NA "));
         }
     }
-
-    if (gps.InvalidLocationCount() >= 2 || bmeSensor.InvalidBMECount() >= 2 || lightSensor.InvalidLightCount() >= 2) ERREUR = 1;
+    if (bmeSensor.InvalidBMECount() >= 2 || lightSensor.InvalidLightCount() >= 2) ERREUR = 1;
 }
