@@ -105,13 +105,16 @@ void modeConfiguration() {
             buttonStatus &= ~BTN_LOCK_2;
             buttonStatus |= BTN_STATE_2;
         }
+        else if (b2 && (buttonStatus & BTN_STATE_2)) {
+            buttonStatus &= ~BTN_STATE_2;  // Réinitialiser l'état du bouton quand relâché
+        }
         
         if ((buttonStatus & BTN_STATE_2) && !b2 && 
             (millis() - button2PressTime >= HOLD_DURATION) && 
             !(buttonStatus & BTN_LOCK_2)) {
+            buttonStatus |= BTN_LOCK_2;    // Verrouiller pour éviter les répétitions
             setMode(MODE_STANDARD, 0, 255, 0);
-            delay(1000);
-            return;
+            return;  // Supprimé le delay(1000)
         }
     }
 }
