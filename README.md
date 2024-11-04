@@ -93,7 +93,7 @@ Les paramètres configurables incluent :
 - **Bleu** : Mode Economy
 - **Orange** : Mode Maintenance
 - **Jaune** : Mode Configuration
-- **Rouge** : Erreur
+- **Clignotement** : Erreur
 
 ### Format des données
 Les données sont enregistrées sur la carte SD au format :
