@@ -110,6 +110,7 @@ void modeConfiguration() {
             (millis() - button2PressTime >= HOLD_DURATION) && 
             !(buttonStatus & BTN_LOCK_2)) {
             setMode(MODE_STANDARD, 0, 255, 0);
+            delay(1000);
             return;
         }
     }
