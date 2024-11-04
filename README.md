@@ -50,13 +50,13 @@ Ce projet est une station météo basée sur Arduino qui permet de collecter et 
 
 ### Structure générale
 ```
-                   [BME280] ----┐
-                   [RTC] -------├── I2C (Base Shield)
-                               │
-[Arduino UNO] <== [SD Shield] <== [Base Shield] <── [RGB LED] (D7)
-                                                └── [Dual Button] (D3)
+
                                                 └── [GPS] (D2)
+                                                └── [Dual Button] (D3)
+[Arduino UNO] <== [SD Shield] <== [Base Shield] <── [RGB LED] (D7)
                                                 └── [Light Sensor] (A0)
+                                                └── [RTC] (I2C)
+                                                └── [BME280] (I2C)
 ```
 
 ### Détails des connexions
