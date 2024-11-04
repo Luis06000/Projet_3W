@@ -1,25 +1,3 @@
-// #ifndef MODES_H
-// #define MODES_H
-
-// #include <Arduino.h>
-
-// // Utiliser uint8_t au lieu de enum pour économiser de la mémoire
-// #define MODE_STANDARD 0
-// #define MODE_ECONOMY 1
-// #define MODE_MAINTENANCE 2
-// #define MODE_CONFIGURATION 3
-
-// extern uint8_t currentMode;
-
-// void initModes();
-// void updateModes();
-// void modeConfiguration();
-
-// #endif // MODES_H
-
-
-
-
 #ifndef MODES_H
 #define MODES_H
 
