@@ -20,23 +20,57 @@ Ce projet est une station météo basée sur Arduino qui permet de collecter et 
 ### Composants matériels
 - Arduino (compatible)
 - Capteur BME280 (température, humidité, pression)
-- Module GPS
-- Capteur de luminosité
+- Module GPS Air530
+- Grove Light Sensor
 - Module RTC DS1307
-- Lecteur de carte SD
-- LEDs RGB chainables
-- 2 boutons de contrôle
+- SD Card Shield V4.0
+- Base Shield V2
+- LED RGB Chainable
+- Grove Dual Button
 
 ## Installation
 
-1. Connectez les composants selon le schéma de câblage
-2. Installez les bibliothèques requises :
-   - TinyGPS++
-   - Adafruit_BME280
-   - RTClib
-   - SD
-   - ChainableLED
-   - SoftwareSerial
+1. Ouvrez un terminal et positionnez-vous dans le répertoire où vous souhaitez installer le projet :
+   ```bash
+   cd chemin/vers/votre/dossier
+   ```
+
+2. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/Luis06000/Projet_3W.git
+   cd Projet_3W
+   ```
+
+3. Exécutez le script d'auto-compilation :
+   ```bash
+   AutoCompil.bat
+   ```
+
+## Schéma de câblage
+
+### Structure générale
+```
+                   [BME280] ----┐
+                   [RTC] -------├── I2C (Base Shield)
+                               │
+[Arduino UNO] <== [SD Shield] <== [Base Shield] <── [RGB LED] (D7)
+                                                └── [Dual Button] (D3)
+                                                └── [GPS] (D2)
+                                                └── [Light Sensor] (A0)
+```
+
+### Détails des connexions
+1. **Empilage des shields (de bas en haut)**:
+   - Arduino UNO (base)
+   - SD Card Shield V4.0
+   - Base Shield V2
+
+2. **Connexions sur le Base Shield**:
+   - Port I2C : BME280 et RTC
+   - Port D7 : LED RGB Chainable
+   - Port D3 : Grove Dual Button
+   - Port D2 : GPS Air530
+   - Port A0 : Grove Light Sensor
 
 ## Configuration
 
