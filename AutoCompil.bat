@@ -27,4 +27,9 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Autocompilation et televersement termines avec succes.
+echo Ouverture du moniteur serie...
+"%PLATFORMIO_PATH%" device monitor
+pause
+
+echo Autocompilation et televersement termines avec succes.
 pause
